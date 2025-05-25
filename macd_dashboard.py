@@ -102,7 +102,9 @@ def render_dashboard():
     ax.plot(data.index[-100:], macd[-100:], label="MACD", color="blue")
     ax.plot(data.index[-100:], signal[-100:], label="Signal", color="red")
     ax.plot(data.index[-100:], vwap[-100:], label="VWAP", color="orange", linestyle="--")
-    ax.bar(data.index[-100:], (macd - signal)[-100:], color="gray", label="Histogram")
+    hist = (macd - signal).dropna()
+    aligned_index = hist.index[-100:]
+    ax.bar(aligned_index, hist[-100:], color="gray", label="Histogram")
     ax.legend()
     ax.grid()
     st.pyplot(fig)
